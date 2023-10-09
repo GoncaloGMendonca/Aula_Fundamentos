@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdqnsov62a53l"]
+
+[ext_resource type="Texture2D" uid="uid://cylhb7cxm1a6q" path="res://icon.svg" id="1_6ltae"]
+[ext_resource type="Script" path="res://player.gd" id="2_w48ku"]
+
+[node name="Player" type="Sprite2D"]
+position = Vector2(577, 319)
+texture = ExtResource("1_6ltae")
+script = ExtResource("2_w48ku")
+speed = 300
