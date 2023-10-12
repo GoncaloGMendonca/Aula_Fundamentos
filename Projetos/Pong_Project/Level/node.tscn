@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7vl4m60d063k"]
+
+[ext_resource type="PackedScene" uid="uid://b0wn46od1556g" path="res://Player/character_body_2d.tscn" id="1_pg4sg"]
+[ext_resource type="PackedScene" uid="uid://d4cg608s5otey" path="res://opppent_paddle.tscn" id="2_garsg"]
+[ext_resource type="PackedScene" uid="uid://y4ei0r3b7obj" path="res://Ball/ball.tscn" id="3_cb5ac"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5unsx"]
+size = Vector2(1182, 29)
+
+[node name="Level" type="Node"]
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.317647, 0.101961, 0.305882, 1)
+
+[node name="Player_Paddle" parent="." instance=ExtResource("1_pg4sg")]
+position = Vector2(31, 324)
+
+[node name="Wall_Bottom" type="StaticBody2D" parent="."]
+position = Vector2(31, 1000)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_Bottom"]
+position = Vector2(552, -335.5)
+shape = SubResource("RectangleShape2D_5unsx")
+
+[node name="Wall_Top" type="StaticBody2D" parent="."]
+position = Vector2(31, 324)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_Top"]
+position = Vector2(552, -335.5)
+shape = SubResource("RectangleShape2D_5unsx")
+
+[node name="Opppent_Paddle" parent="." instance=ExtResource("2_garsg")]
+position = Vector2(1085, 377)
+
+[node name="Ball" parent="." instance=ExtResource("3_cb5ac")]
+position = Vector2(580, 318)
