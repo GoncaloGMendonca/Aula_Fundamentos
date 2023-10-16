@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://b7vl4m60d063k"]
+[gd_scene load_steps=7 format=3 uid="uid://b7vl4m60d063k"]
 
+[ext_resource type="Script" path="res://Level/node.gd" id="1_dgw1y"]
 [ext_resource type="PackedScene" uid="uid://b0wn46od1556g" path="res://Player/character_body_2d.tscn" id="1_pg4sg"]
 [ext_resource type="PackedScene" uid="uid://d4cg608s5otey" path="res://opppent_paddle.tscn" id="2_garsg"]
 [ext_resource type="PackedScene" uid="uid://y4ei0r3b7obj" path="res://Ball/ball.tscn" id="3_cb5ac"]
@@ -7,7 +8,11 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5unsx"]
 size = Vector2(1182, 29)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7t0rm"]
+size = Vector2(52, 639)
+
 [node name="Level" type="Node"]
+script = ExtResource("1_dgw1y")
 
 [node name="Background" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -16,6 +21,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.317647, 0.101961, 0.305882, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 150
+alignment = 1
+
+[node name="PlayerScore" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0
+"
+
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
+modulate = Color(0.988235, 1, 1, 0)
+layout_mode = 2
+
+[node name="OppentScore" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
 
 [node name="Player_Paddle" parent="." instance=ExtResource("1_pg4sg")]
 position = Vector2(31, 324)
@@ -34,8 +64,26 @@ position = Vector2(31, 324)
 position = Vector2(552, -335.5)
 shape = SubResource("RectangleShape2D_5unsx")
 
-[node name="Opppent_Paddle" parent="." instance=ExtResource("2_garsg")]
+[node name="Opppent_Paddle" parent="." node_paths=PackedStringArray("ball") instance=ExtResource("2_garsg")]
 position = Vector2(1085, 377)
+ball = NodePath("../Ball")
 
 [node name="Ball" parent="." instance=ExtResource("3_cb5ac")]
 position = Vector2(580, 318)
+
+[node name="WallLeft" type="Area2D" parent="."]
+position = Vector2(0, 377)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLeft"]
+position = Vector2(-25, -51)
+shape = SubResource("RectangleShape2D_7t0rm")
+
+[node name="WalRight" type="Area2D" parent="."]
+position = Vector2(1201, 377)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WalRight"]
+position = Vector2(-25, -50.5)
+shape = SubResource("RectangleShape2D_7t0rm")
+
+[connection signal="body_entered" from="WallLeft" to="." method="_on_wall_left_body_entered"]
+[connection signal="body_entered" from="WalRight" to="." method="_on_wal_right_body_entered"]
