@@ -6,7 +6,7 @@ extends CharacterBody2D
 
 @onready var start_position := position
 
-func _physics_process(delta:float) -> void:
+func _physics_process(_delta:float) -> void:
 	velocity.x = 0
 	velocity.y = get_direction() * speed
 	move_and_slide()

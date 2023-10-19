@@ -9,11 +9,11 @@ var direction := 0.0
 # Called when the node enters the scene tree for the first time.
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	position.x = 0
 	velocity.y = direction * speed
 	move_and_slide()
 	position.x = start_position.x
 
-func _unhandled_input(event: InputEvent) -> void:
+func _unhandled_input(_event: InputEvent) -> void:
 	direction = Input.get_axis("ui_up","ui_down")
