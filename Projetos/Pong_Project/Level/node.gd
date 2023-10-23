@@ -9,8 +9,11 @@ var opponent_score:=0
 @onready var countdown_timer: Timer = %"Countdown Timer"
 @onready var count_down_label: Label = %CountDownLabel
 @onready var score_sound: AudioStreamPlayer = %ScoreSound
- 
+@onready var player_name: Label = %PlayerName
 
+
+func _ready() -> void:
+	player_name.text = GameManager.player1_name
 
 func _process(_delta: float) -> void:
 	count_down_label.text = str(ceil(countdown_timer.time_left))

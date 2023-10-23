@@ -79,6 +79,13 @@ layout_mode = 2
 text = "0"
 label_settings = SubResource("LabelSettings_arw42")
 
+[node name="PlayerName" type="Label" parent="."]
+unique_name_in_owner = true
+offset_right = 30.0
+offset_bottom = 57.0
+text = "Player Name"
+label_settings = SubResource("LabelSettings_arw42")
+
 [node name="Player_Paddle" parent="." instance=ExtResource("1_pg4sg")]
 position = Vector2(31, 324)
 
