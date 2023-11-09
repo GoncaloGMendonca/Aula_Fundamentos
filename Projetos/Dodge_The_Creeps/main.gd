@@ -11,16 +11,20 @@ var score: int
 @onready var start_position: Marker2D = %StartPosition
 @onready var player: Area2D = %Player
 @onready var mob_spawn_location: PathFollow2D = %MobSpawnLocation
+@onready var hud: CanvasLayer = %HUD
+@onready var game_over_music: AudioStreamPlayer = %GameOverMusic
+@onready var background_music: AudioStreamPlayer = %BackgroundMusic
 
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	new_game() 
+
+## Called when the node enters the scene tree for the first time.
+#func _ready() -> void:
+#	new_game() 
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+
+func _process(_delta: float) -> void:
 	pass
 
 
@@ -28,12 +32,18 @@ func new_game() -> void:
 	score = 0
 	player.start(start_position.position)
 	start_timer.start()
-
+	hud.update_score(score)
+	hud.show_message("Get Ready")
+	get_tree().call_group("mob","queque_free")
+	background_music.play()
 
 
 func game_over() -> void:
 	mob_timer.stop()
 	score_timer.stop()
+	hud.show_game_over()
+	background_music.stop()
+	game_over_music.play()
 
 
 
@@ -44,6 +54,8 @@ func _on_start_timer_timeout() -> void:
 
 func _on_score_timer_timeout() -> void:
 	score += 1
+	hud.update_score(score)
+	
 
 
 func _on_mob_timer_timeout() -> void:
