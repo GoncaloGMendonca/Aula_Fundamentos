@@ -1,7 +1,7 @@
 extends Node
 
 
-@export var mob_scene: PackedScene
+@export var mob_scene: Array[PackedScene]
 var score: int 
 
 
@@ -59,18 +59,21 @@ func _on_score_timer_timeout() -> void:
 
 
 func _on_mob_timer_timeout() -> void:
-	var mob:= mob_scene.instantiate()
+	var mob: Node2D = mob_scene.pick_random().instantiate()
+	add_child(mob)
 	
 	mob_spawn_location.progress_ratio = randf()
 	var direction := mob_spawn_location.rotation + 90
 	direction += randf_range(-PI / 4, PI / 4)
 	
-	mob.position = mob_spawn_location.position
-	mob.rotation = direction
+	mob.spawn(mob_spawn_location.position, direction)
 	
-	var velocity = Vector2(randf_range(150.0,250.0),0)
-	mob.linear_velocity = velocity.rotated(direction)
+#	mob.position = mob_spawn_location.position
+#	mob.rotation = direction
+#
+#	var velocity = Vector2(randf_range(150.0,250.0),0)
+#	mob.linear_velocity = velocity.rotated(direction)
 	
-	add_child(mob)
+
 
 
