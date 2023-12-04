@@ -6,11 +6,13 @@ enum Direction {LEFT,RIGHT,UP,DOWN}
 
 var facing_direction := Direction.LEFT
 var previous_direction := Vector2.LEFT
+var start_position: Vector2
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready() -> void:
 	animated_sprite_2d.play("left")
+	start_position = position
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("down"):
@@ -46,9 +48,28 @@ func _physics_process(delta: float) -> void:
 	var collision := move_and_collide(velocity * delta)
 	
 	if collision:
-		move_and_collide(previous_direction * speed * delta)
+		if collision.get_collider() is CharacterBody2D:
+			#collide com a ghost
+			_die()
+		else:
+			#collide com a parede
+			move_and_collide(previous_direction * speed * delta)
 	else:
-		previous_direction = direction
+		previous_direction = direction 
 	
+func _die() -> void:
+	animated_sprite_2d.pause()
+	var tween := get_tree().create_tween()
+	tween.tween_property(self,"modulate",Color.TRANSPARENT,2)
+	tween.tween_callback(_restart)
+	process_mode = Node.PROCESS_MODE_DISABLED
+	
+	
+func _restart() -> void:
+	modulate = Color.WHITE
+	process_mode = Node.PROCESS_MODE_INHERIT
+	position = start_position
+	facing_direction = Direction.LEFT
+	animated_sprite_2d.play("left")
 	
 	

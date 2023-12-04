@@ -358,19 +358,25 @@ animations = [{
 radius = 9.0
 
 [node name="Ghost" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 24
 script = ExtResource("1_tei1v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_rhy1i")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_gkm8r")
 animation = &"pink_down"
 
 [node name="GateDetector" type="Area2D" parent="."]
+unique_name_in_owner = true
 collision_layer = 0
 collision_mask = 16
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GateDetector"]
 shape = SubResource("CircleShape2D_62hsi")
+
+[connection signal="body_exited" from="GateDetector" to="." method="_on_gate_detector_body_exited"]
