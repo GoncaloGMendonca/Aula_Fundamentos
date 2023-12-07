@@ -1369,6 +1369,7 @@ position = Vector2(-595, 0)
 [node name="SirenSound" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("6_2sxe0")
+autoplay = true
 
 [node name="RunningSound" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
