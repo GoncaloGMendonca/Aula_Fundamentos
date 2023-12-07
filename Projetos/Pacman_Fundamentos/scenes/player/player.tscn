@@ -152,3 +152,9 @@ shape = SubResource("RectangleShape2D_amyuu")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_syves")
 animation = &"down"
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+
+[node name="EatGhostSound" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true

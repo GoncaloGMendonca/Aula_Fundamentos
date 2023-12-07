@@ -9,6 +9,9 @@ var previous_direction := Vector2.LEFT
 var start_position: Vector2
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var death_sound: AudioStreamPlayer = %DeathSound
+@onready var eat_ghost_sound: AudioStreamPlayer = %EatGhostSound
+
 
 func _ready() -> void:
 	animated_sprite_2d.play("left")
@@ -50,13 +53,17 @@ func _physics_process(delta: float) -> void:
 	if collision:
 		if collision.get_collider() is CharacterBody2D:
 			#collide com a ghost
-			_die()
+				if GameManager.is_running_mode:
+					collision.get_collider().kill()
+					GameManager.eat_ghost()
+				else:
+					_die()
 		else:
 			#collide com a parede
 			move_and_collide(previous_direction * speed * delta)
 	else:
 		previous_direction = direction 
-	
+
 func _die() -> void:
 	animated_sprite_2d.pause()
 	var tween := get_tree().create_tween()
