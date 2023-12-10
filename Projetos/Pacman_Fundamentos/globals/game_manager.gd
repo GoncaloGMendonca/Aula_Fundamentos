@@ -3,8 +3,10 @@ extends Node
 signal running_mode_entered
 signal running_mode_ending
 signal running_mode_ended
+signal pacman_died
 
 var score := 0
+var lives := 3
 var is_running_mode := false
 
 func eat_small_pellet() -> void:

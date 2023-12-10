@@ -22,6 +22,7 @@ var start_position: Vector2
 
 
 func _ready() -> void:
+	GameManager.pacman_died.connect(_restart)
 	GameManager.running_mode_entered.connect(_on_running_mode_entered)
 	GameManager.running_mode_ending.connect(_on_running_mode_ending)
 	GameManager.running_mode_ended.connect(_on_running_mode_ended)
@@ -104,3 +105,11 @@ func _on_running_mode_ended() -> void:
 func _on_gate_detector_body_exited(_body: Node2D) -> void:
 	inside_cage = false
 	set_collision_mask_value(5,true)
+	
+func _restart() -> void:
+	global_position = start_position
+	direction = Vector2.UP
+	inside_cage = true
+	set_collision_mask_value(5,true)
+	await get_tree().create_timer(release_time).timeout
+	_release_ghost()

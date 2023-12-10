@@ -56,8 +56,10 @@ func _physics_process(delta: float) -> void:
 				if GameManager.is_running_mode:
 					collision.get_collider().kill()
 					GameManager.eat_ghost()
+					eat_ghost_sound.play()
 				else:
 					_die()
+					death_sound.play()
 		else:
 			#collide com a parede
 			move_and_collide(previous_direction * speed * delta)
@@ -78,5 +80,7 @@ func _restart() -> void:
 	position = start_position
 	facing_direction = Direction.LEFT
 	animated_sprite_2d.play("left")
+	GameManager.lives -= 1
+	GameManager.pacman_died.emit()
 	
 	
